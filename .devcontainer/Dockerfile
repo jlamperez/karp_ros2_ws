@@ -1,16 +1,17 @@
-FROM althack/ros2:foxy-dev 
+FROM althack/ros2:foxy-gazebo-nvidia
 
 # ** [Optional] Uncomment this section to install additional packages. **
 #
-# ENV DEBIAN_FRONTEND=noninteractive
-# RUN apt-get update \
-#    && apt-get -y install --no-install-recommends <your-package-list-here> \
-#    #
-#    # Clean up
-#    && apt-get autoremove -y \
-#    && apt-get clean -y \
-#    && rm -rf /var/lib/apt/lists/*
-# ENV DEBIAN_FRONTEND=dialog
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+   && apt-get -y install --no-install-recommends libusb-1.0-0-dev \
+   ros-foxy-xacro \
+   ros-foxy-joint-state-publisher-gui \
+   ros-foxy-ros2-control ros-foxy-ros2-controllers \
+   && apt-get autoremove -y \
+   && apt-get clean -y \
+   && rm -rf /var/lib/apt/lists/*
+ENV DEBIAN_FRONTEND=dialog
 
 # Set up auto-source of workspace for ros user
 ARG WORKSPACE
